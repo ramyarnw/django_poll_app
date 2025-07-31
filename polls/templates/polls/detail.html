@@ -14,11 +14,18 @@
 </head>
 <body>
 <p class="p1"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1">&lt;h1&gt;{{ question.question_text }}&lt;/h1&gt;</span></p>
-<p class="p2"><span class="s1">&lt;ul&gt;</span></p>
-<p class="p2"><span class="s1">{% for choice in question.choice_set.all %}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;li&gt;{{ choice.choice_text }}&lt;/li&gt;</span></p>
-<p class="p2"><span class="s1">{% endfor %}</span></p>
-<p class="p2"><span class="s1">&lt;/ul&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">&lt;form action="{% url 'polls:vote' question.id %}" method="post"&gt;</span></p>
+<p class="p2"><span class="s1">{% csrf_token %}</span></p>
+<p class="p2"><span class="s1">&lt;fieldset&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>&lt;legend&gt;&lt;h1&gt;{{ question.question_text }}&lt;/h1&gt;&lt;/legend&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>{% if error_message %}&lt;p&gt;&lt;strong&gt;{{ error_message }}&lt;/strong&gt;&lt;/p&gt;{% endif %}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>{% for choice in question.choice_set.all %}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span>&lt;label for="choice{{ forloop.counter }}"&gt;{{ choice.choice_text }}&lt;/label&gt;&lt;br&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span>{% endfor %}</span></p>
+<p class="p2"><span class="s1">&lt;/fieldset&gt;</span></p>
+<p class="p2"><span class="s1">&lt;input type="submit" value="Vote"&gt;</span></p>
+<p class="p2"><span class="s1">&lt;/form&gt;</span></p>
 </body>
 </html>
